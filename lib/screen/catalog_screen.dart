@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
+import 'package:shopping_app/screen/cart_screen.dart';
+import 'package:shopping_app/utils/custom_widget/badge_button.dart';
+import 'package:shopping_app/utils/custom_widget/product_catalog_card.dart';
 
 import '../utils/custom_widget/wrapper.dart';
-import 'cart_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({Key? key}) : super(key: key);
@@ -26,36 +28,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
       appBar: AppBar(
         title: Text('Catalog'),
         actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => CartScreen()));
-                },
-                icon: Icon(Icons.shopping_cart),
-              ),
-              Visibility(
-                visible: prod.cartList.isEmpty ? false : true,
-                child: Positioned.directional(
-                  top: 5,
-                  textDirection: TextDirection.ltr,
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Center(
-                      child: Text(
-                        prod.cartList.length.toString(),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          BadgeButton(
+            icon: Icons.shopping_cart,
+            countBasis: prod.cartList.length.toString(),
+            visibility: prod.cartList.isEmpty ? false : true,
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => CartScreen())),
           )
         ],
       ),
@@ -75,90 +53,42 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    // Text(
-                    //   'Products',
-                    //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    // ),
                     SizedBox(height: 10),
                     Expanded(
                       child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 220,
-                                childAspectRatio: 1 / 2.25,
-                                mainAxisSpacing: 10,
-                                crossAxisSpacing: 10),
-                        shrinkWrap: true,
-                        itemCount: prod.productList.length,
-                        itemBuilder: (_, index) => Card(
-                          elevation: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: 200,
-                                  height: 200,
-                                  child: Image.network(
-                                    prod.productList[index].image!,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(prod.productList[index].title!),
-                                SizedBox(height: 10),
-                                Spacer(),
-                                Text(
-                                    'Rating: ${prod.productList[index].rating}'),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '₱ ${prod.productList[index].price!}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    ),
-                                    IconButton(
-                                        onPressed: () {
-                                          prod.addToCart(
-                                              id: prod.productList[index].id,
-                                              title:
-                                                  prod.productList[index].title,
-                                              price:
-                                                  prod.productList[index].price,
-                                              description: prod
-                                                  .productList[index]
-                                                  .description,
-                                              image:
-                                                  prod.productList[index].image,
-                                              rating: prod
-                                                  .productList[index].rating);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text('Item added')));
-                                        },
-                                        icon: Icon(Icons.add_shopping_cart))
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 220,
+                                  childAspectRatio: 1 / 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10),
+                          shrinkWrap: true,
+                          itemCount: prod.productList.length,
+                          itemBuilder: (_, index) {
+                            return ProductCatalogCard(
+                              image: prod.productList[index].image!,
+                              title: prod.productList[index].title!,
+                              rating: prod.productList[index].rating['rate']!,
+                              price: prod.productList[index].price!,
+                              addToCartFunction: () {
+                                prod.addToCart(
+                                  id: prod.productList[index].id,
+                                  image: prod.productList[index].image,
+                                  title: prod.productList[index].title,
+                                  description:
+                                      prod.productList[index].description,
+                                  category: prod.productList[index].category,
+                                  rating: prod.productList[index].rating,
+                                  price: prod.productList[index].price,
+                                );
+                              },
+                            );
+                          }),
                     ),
                   ],
                 ),
               ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => prod.getData(),
-      //   child: Icon(Icons.search),
-      // ),
     );
   }
 }

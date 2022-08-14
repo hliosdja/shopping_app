@@ -34,14 +34,12 @@ class ProductProvider extends ChangeNotifier {
       );
     }
     notifyListeners();
-    print('product list: ${_productList.length}');
-    print('products: $_productList');
   }
 
   void addToCart(
       {int? id,
       String? title,
-      dynamic price,
+      num? price,
       String? description,
       String? category,
       String? image,

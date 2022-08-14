@@ -24,7 +24,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: Text(
-                  'You haven\'t added an item to your cat yet.',
+                  'You haven\'t added an item to your cart yet.',
                   style: TextStyle(fontSize: 15),
                   textAlign: TextAlign.center,
                 ),
