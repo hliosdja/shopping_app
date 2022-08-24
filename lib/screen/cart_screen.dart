@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
+import 'package:shopping_app/utils/custom_widget/cart_item.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -13,7 +14,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final prod = Provider.of<ProductProvider>(context);
-    double titleWidth = MediaQuery.of(context).size.width * 0.6;
 
     return Scaffold(
       appBar: AppBar(
@@ -45,39 +45,20 @@ class _CartScreenState extends State<CartScreen> {
                         shrinkWrap: true,
                         itemCount: prod.cartList.length,
                         itemBuilder: (_, index) {
-                          return Card(
-                            elevation: 4,
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  padding: EdgeInsets.all(8),
-                                  child: Image.network(
-                                    prod.cartList[index].image!,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                Container(
-                                  width: titleWidth,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        prod.cartList[index].title!,
-                                        softWrap: true,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text(
-                                          '₱ ${prod.cartList[index].price!.toString()}'),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                          return Dismissible(
+                            key: Key(prod.cartList[index].id!.toString()),
+                            child: CartItem(
+                                image: prod.cartList[index].image!,
+                                title: prod.cartList[index].title!,
+                                price: prod.cartList[index].price!.toString()),
+                            onDismissed: (direction) {
+                              setState(() {
+                                prod.cartList.removeAt(index);
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Item removed on cart')));
+                            },
                           );
                         }),
                   ),

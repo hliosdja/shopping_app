@@ -51,6 +51,8 @@ class ProductCatalogCard extends StatelessWidget {
               child: Image.network(
                 image,
                 fit: BoxFit.contain,
+                errorBuilder: (_, exception, stacktrace) =>
+                    Image.asset('asset/shopping_bag.png'),
               ),
             ),
             SizedBox(height: 10),
@@ -64,7 +66,6 @@ class ProductCatalogCard extends StatelessWidget {
             Row(
               children: [
                 Text('Ratings: '),
-                // Text('Ratings: $rating'),
                 Row(
                   children: _buildRatingStars(rating),
                 ),
