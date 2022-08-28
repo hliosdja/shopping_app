@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/screen/product_description_screen.dart';
 
 class ProductCatalogCard extends StatelessWidget {
+  final int id;
   final String image;
   final String title;
-  final num rating;
   final num price;
+  final num rating;
+  final String description;
   final VoidCallback addToCartFunction;
   const ProductCatalogCard(
       {Key? key,
@@ -12,7 +15,9 @@ class ProductCatalogCard extends StatelessWidget {
       required this.title,
       required this.rating,
       required this.addToCartFunction,
-      required this.price})
+      required this.price,
+      required this.id,
+      required this.description})
       : super(key: key);
 
   @override
@@ -37,56 +42,68 @@ class ProductCatalogCard extends StatelessWidget {
       return stars;
     }
 
-    return Card(
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: 200,
-              height: 200,
-              child: Image.network(
-                image,
-                fit: BoxFit.contain,
-                errorBuilder: (_, exception, stacktrace) =>
-                    Image.asset('asset/shopping_bag.png'),
+    return GestureDetector(
+      child: Card(
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: 200,
+                height: 200,
+                child: Image.network(
+                  image,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, exception, stacktrace) =>
+                      Image.asset('asset/shopping_bag.png'),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 10),
-            Spacer(),
-            Row(
-              children: [
-                Text('Ratings: '),
-                Row(
-                  children: _buildRatingStars(rating),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '₱ ${price.toString()}',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                IconButton(
-                    onPressed: addToCartFunction,
-                    icon: Icon(Icons.add_shopping_cart))
-              ],
-            )
-          ],
+              SizedBox(height: 10),
+              Text(
+                title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 10),
+              Spacer(),
+              Row(
+                children: [
+                  Text('Ratings: '),
+                  Row(
+                    children: _buildRatingStars(rating),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '₱ ${price.toString()}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  IconButton(
+                      onPressed: addToCartFunction,
+                      icon: Icon(Icons.add_shopping_cart))
+                ],
+              )
+            ],
+          ),
         ),
       ),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (builder) => ProductDescriptionScreen(
+                  id: id,
+                  image: image,
+                  title: title,
+                  price: price,
+                  description: description,
+                  rating: rating))),
     );
   }
 }

@@ -26,10 +26,18 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catalog'),
+        title: TextField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(8),
+            hintText: 'Search product',
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           BadgeButton(
             icon: Icons.shopping_cart,
+            iconColor: Colors.black,
             countBasis: prod.cartList.length.toString(),
             visibility: prod.cartList.isEmpty ? false : true,
             onPressed: () => Navigator.push(
@@ -66,10 +74,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
                           itemCount: prod.productList.length,
                           itemBuilder: (_, index) {
                             return ProductCatalogCard(
+                              id: prod.productList[index].id!,
                               image: prod.productList[index].image!,
                               title: prod.productList[index].title!,
                               rating: prod.productList[index].rating['rate']!,
                               price: prod.productList[index].price!,
+                              description: prod.productList[index].description!,
                               addToCartFunction: () {
                                 prod.addToCart(
                                   id: prod.productList[index].id,
