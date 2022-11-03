@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
 import 'package:shopping_app/utils/custom_widget/cart_item.dart';
+import 'package:shopping_app/utils/custom_widget/round_button.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -17,7 +18,21 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         title: Text('Cart'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: const [
+          Center(
+            child: Text(
+              'Your Orders',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+            ),
+          ),
+          SizedBox(
+            width: 30,
+          )
+        ],
       ),
       body: prod.cartList.isEmpty
           ? Center(
@@ -31,37 +46,52 @@ class _CartScreenState extends State<CartScreen> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Items on cart',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  SizedBox(height: 20),
                   Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: prod.cartList.length,
-                        itemBuilder: (_, index) {
-                          return Dismissible(
-                            key: Key(prod.cartList[index].id!.toString()),
-                            child: CartItem(
-                                image: prod.cartList[index].image!,
-                                title: prod.cartList[index].title!,
-                                price: prod.cartList[index].price!.toString()),
-                            onDismissed: (direction) {
-                              setState(() {
-                                prod.cartList.removeAt(index);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text('Item removed on cart')));
-                            },
-                          );
-                        }),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: prod.cartList.length,
+                      itemBuilder: (_, index) {
+                        return Dismissible(
+                          key: Key(prod.cartList[index].id!.toString()),
+                          child: CartItem(
+                              image: prod.cartList[index].image!,
+                              title: prod.cartList[index].title!,
+                              price: prod.cartList[index].price!.toString()),
+                          onDismissed: (direction) {
+                            setState(() {
+                              prod.cartList.removeAt(index);
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text('Item removed on cart')));
+                          },
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          SizedBox(height: 8),
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Total: ',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '\$ 100.99',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  RoundButton(height: 60, label: 'Checkout', onPressed: () {}),
                 ],
               ),
             ),

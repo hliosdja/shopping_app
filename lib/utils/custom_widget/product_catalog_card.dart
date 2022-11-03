@@ -82,7 +82,7 @@ class ProductCatalogCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '₱ ${price.toString()}',
+                    '\$ ${price.toString()}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   IconButton(

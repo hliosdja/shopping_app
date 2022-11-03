@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
 import 'package:shopping_app/providers/user_provider.dart';
 import 'package:shopping_app/screen/catalog_screen.dart';
+import 'package:shopping_app/utils/app_palette.dart';
 
 void main() {
   runApp(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Palette.brown,
       ),
       home: const CatalogScreen(),
     );

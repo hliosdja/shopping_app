@@ -68,7 +68,7 @@ class ProductDescriptionScreen extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
                   SizedBox(height: 10),
                   Text(
-                    '₱ ${price.toString()}',
+                    '\$ ${price.toString()}',
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(
