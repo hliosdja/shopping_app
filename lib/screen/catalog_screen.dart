@@ -7,18 +7,8 @@ import 'package:shopping_app/utils/custom_widget/product_catalog_card.dart';
 
 import '../utils/custom_widget/wrapper.dart';
 
-class CatalogScreen extends StatefulWidget {
+class CatalogScreen extends StatelessWidget {
   const CatalogScreen({Key? key}) : super(key: key);
-
-  @override
-  State<CatalogScreen> createState() => _CatalogScreenState();
-}
-
-class _CatalogScreenState extends State<CatalogScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +24,16 @@ class _CatalogScreenState extends State<CatalogScreen> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          BadgeButton(
-            icon: Icons.shopping_cart,
-            iconColor: Colors.black,
-            countBasis: prod.cartList.length.toString(),
-            visibility: prod.cartList.isEmpty ? false : true,
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (_) => CartScreen())),
-          )
-        ],
+        // actions: [
+        //   BadgeButton(
+        //     icon: Icons.shopping_cart,
+        //     iconColor: Colors.black,
+        //     countBasis: prod.cartList.length.toString(),
+        //     visibility: prod.cartList.isEmpty ? false : true,
+        //     onPressed: () => Navigator.push(
+        //         context, MaterialPageRoute(builder: (_) => CartScreen())),
+        //   )
+        // ],
       ),
       body: Wrapper(
         initState: () => prod.getData(),
@@ -58,46 +48,59 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 ],
               ))
             : Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 10),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 220,
-                                  childAspectRatio: 1 / 2,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10),
-                          shrinkWrap: true,
-                          itemCount: prod.productList.length,
-                          itemBuilder: (_, index) {
-                            return ProductCatalogCard(
-                              id: prod.productList[index].id!,
-                              image: prod.productList[index].image!,
-                              title: prod.productList[index].title!,
-                              rating: prod.productList[index].rating['rate']!,
-                              price: prod.productList[index].price!,
-                              description: prod.productList[index].description!,
-                              addToCartFunction: () {
-                                prod.addToCart(
-                                  id: prod.productList[index].id,
-                                  image: prod.productList[index].image,
-                                  title: prod.productList[index].title,
-                                  description:
-                                      prod.productList[index].description,
-                                  category: prod.productList[index].category,
-                                  rating: prod.productList[index].rating,
-                                  price: prod.productList[index].price,
-                                );
-                              },
-                            );
-                          }),
-                    ),
-                  ],
-                ),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                childAspectRatio: 1 / 2,
+                                mainAxisSpacing: 5,
+                                crossAxisSpacing: 5),
+                        shrinkWrap: true,
+                        itemCount: prod.productList.length,
+                        itemBuilder: (_, index) {
+                          return ProductCatalogCard(
+                            id: prod.productList[index].id!,
+                            image: prod.productList[index].image!,
+                            title: prod.productList[index].title!,
+                            rating: prod.productList[index].rating['rate']!,
+                            price: prod.productList[index].price!,
+                            description: prod.productList[index].description!,
+                            addToCartFunction: () {
+                              prod.addToCart(
+                                id: prod.productList[index].id,
+                                image: prod.productList[index].image,
+                                title: prod.productList[index].title,
+                                description:
+                                    prod.productList[index].description,
+                                category: prod.productList[index].category,
+                                rating: prod.productList[index].rating,
+                                price: prod.productList[index].price,
+                              );
+                            },
+                          );
+                        }),
+                  ),
+                ],
               ),
+            ),
+      ),
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0,
+        child: FloatingActionButton(
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CartScreen())),
+          child: Icon(Icons.shopping_cart),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
+        ],
       ),
     );
   }

@@ -41,13 +41,13 @@ class CartItem extends StatelessWidget {
                   Text(
                     title,
                     softWrap: true,
-                    style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15),
                   ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$ $price', style: TextStyle(fontSize: 17)),
+                      Text('\$ $price', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                       QuantityWidget()
                     ],
                   ),

@@ -56,7 +56,7 @@ class ProductCatalogCard extends StatelessWidget {
                 height: 200,
                 child: Image.network(
                   image,
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   errorBuilder: (_, exception, stacktrace) =>
                       Image.asset('asset/shopping_bag.png'),
                 ),
@@ -68,7 +68,6 @@ class ProductCatalogCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 10),
-              Spacer(),
               Row(
                 children: [
                   Text('Ratings: '),
@@ -77,7 +76,7 @@ class ProductCatalogCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -26,7 +26,7 @@ class _CartScreenState extends State<CartScreen> {
           Center(
             child: Text(
               'Your Orders',
-              style: TextStyle(color: Colors.black, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(
