@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
-import 'package:shopping_app/screen/cart_screen.dart';
-import 'package:shopping_app/utils/custom_widget/badge_button.dart';
 import 'package:shopping_app/utils/custom_widget/product_catalog_card.dart';
 
 import '../utils/custom_widget/wrapper.dart';
@@ -16,10 +14,14 @@ class CatalogScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(8),
-            hintText: 'Search product',
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(8),
+              hintText: 'Search product',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(18))
+            ),
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -87,20 +89,6 @@ class CatalogScreen extends StatelessWidget {
                 ],
               ),
             ),
-      ),
-      floatingActionButton: Visibility(
-        visible: MediaQuery.of(context).viewInsets.bottom == 0,
-        child: FloatingActionButton(
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CartScreen())),
-          child: Icon(Icons.shopping_cart),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-        ],
       ),
     );
   }

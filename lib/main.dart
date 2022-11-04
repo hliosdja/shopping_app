@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopping_app/providers/product_provider.dart';
 import 'package:shopping_app/providers/user_provider.dart';
 import 'package:shopping_app/screen/catalog_screen.dart';
+import 'package:shopping_app/screen/home_screen.dart';
 import 'package:shopping_app/utils/app_palette.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Palette.brown,
       ),
-      home: const CatalogScreen(),
+      home: HomeScreen(),
     );
   }
 }
