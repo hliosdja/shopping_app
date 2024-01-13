@@ -1,6 +1,6 @@
 import 'package:shopping_app/features/products/domain/entities/products.dart';
-import '../../../../core/resources/data_state.dart';
+import '../../../../core/resources/request_status.dart';
 
 abstract class ProductsRepository {
-  Future<DataState<List<ProductsEntity>>> getAllProducts();
+  Future<RequestStatus<List<ProductsEntity>>> getAllProducts();
 }
