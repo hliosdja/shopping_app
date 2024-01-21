@@ -37,7 +37,7 @@ class ProductModel {
 }
 
 class RatingModel {
-  final double? rate;
+  final num? rate;
   final int? count;
 
   RatingModel({
@@ -46,7 +46,7 @@ class RatingModel {
   });
 
   factory RatingModel.fromJson(Map<String, dynamic> json) => RatingModel(
-        rate: json['rate'],
-        count: json['count'],
+        rate: json['rate'] ?? 0,
+        count: json['count'] ?? 0,
       );
 }

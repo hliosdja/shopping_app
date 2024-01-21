@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
+import 'package:shopping_app/config/network/failure.dart';
 import 'package:shopping_app/core/resources/request_status.dart';
 import 'package:shopping_app/features/products/data/datasources/remote/products_api_service.dart';
 import 'package:shopping_app/features/products/data/models/products.dart';
@@ -12,22 +14,23 @@ class ProductsRepositoryImpl implements ProductsRepository {
   ProductsRepositoryImpl(this._productsApiService);
 
   @override
-  Future<RequestStatus<List<ProductsModel>>> getAllProducts() async  {
+  Future<Either<RequestFailed, RequestSuccess>> getAllProducts() async {
+    List productList = <ProductsModel>[];
+
     try {
-      final response = await _productsApiService.getAllProducts();
-      if(response.statusCode == HttpStatus.ok) {
-        return RequestSuccess(response.data);
+      var response = await _productsApiService.getAllProducts();
+      if (response.statusCode == HttpStatus.ok) {
+        return Right(RequestSuccess(response.data));
       } else {
-        return RequestFailed(
-            DioException(
-                response: response,
-                type: DioExceptionType.unknown,
-                requestOptions: response.requestOptions
-            )
+        return Left(
+          RequestFailed(
+            Failure(
+                status: response.statusCode, message: response.statusMessage),
+          ),
         );
       }
-    } on DioException catch(e) {
-      return RequestFailed(e);
+    } catch (e) {
+      return Left(RequestFailed(Failure(message: "Error: $e")));
     }
   }
 }

@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
+import '../../config/network/failure.dart';
 
 abstract class RequestStatus<T> {
   final T? data;
-  final DioException? error;
+  final Failure? error;
 
   const RequestStatus({this.data, this.error});
 }
@@ -12,5 +12,5 @@ class RequestSuccess<T> extends RequestStatus<T> {
 }
 
 class RequestFailed<T> extends RequestStatus<T> {
-  const RequestFailed(DioException error) : super(error: error);
+  const RequestFailed(Failure error) : super(error: error);
 }

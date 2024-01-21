@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:shopping_app/core/constants.dart';
+import 'package:shopping_app/config/network/api_service.dart';
 
-abstract class ProductsApiService {
-  final dio = Dio();
+class ProductsApiService {
+  final ApiService _apiService;
+
+  ProductsApiService(this._apiService);
 
   Future<Response> getAllProducts() async {
-    return await dio.get('$baseURL/products');
+    return await _apiService.get('products');
   }
 }
