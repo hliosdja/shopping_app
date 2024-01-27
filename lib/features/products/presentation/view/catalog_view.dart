@@ -58,7 +58,7 @@ class _CatalogViewState extends State<CatalogView> {
           }
 
           if (state is ProductsGetSuccess) {
-            log("${state.productsList}");
+            log("in success: ${state.productsList.length}");
             return CatalogGridView(productList: state.productsList);
           }
 

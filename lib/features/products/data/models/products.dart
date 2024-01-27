@@ -1,5 +1,7 @@
+import 'dart:developer';
+
+import 'package:shopping_app/features/products/data/models/rating.dart';
 import 'package:shopping_app/features/products/domain/entities/products.dart';
-import '../../../../model/product_model.dart';
 
 class ProductsModel extends ProductsEntity {
   const ProductsModel({
@@ -10,7 +12,15 @@ class ProductsModel extends ProductsEntity {
     String? category,
     String? image,
     RatingModel? rating,
-  });
+  }) : super(
+          id: id,
+          title: title,
+          price: price,
+          description: description,
+          category: category,
+          image: image,
+          rating: rating,
+        );
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) {
     return ProductsModel(

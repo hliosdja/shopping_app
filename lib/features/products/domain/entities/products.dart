@@ -4,20 +4,20 @@ import 'package:shopping_app/features/products/domain/entities/rating.dart';
 class ProductsEntity extends Equatable {
   final int? id;
   final String? title;
-  final double? price;
+  final num? price;
   final String? description;
   final String? category;
   final String? image;
   final RatingEntity? rating;
 
   const ProductsEntity({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    this.rating,
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.category,
+    required this.image,
+    required this.rating,
   });
 
   @override

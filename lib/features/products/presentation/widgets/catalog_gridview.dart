@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:shopping_app/features/products/data/models/products.dart';
 import 'package:shopping_app/features/products/presentation/widgets/catalog_product_card.dart';
@@ -9,6 +11,9 @@ class CatalogGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    log("in catalog view: ${productList.length}");
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
