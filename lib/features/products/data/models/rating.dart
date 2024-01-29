@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:shopping_app/features/products/domain/entities/rating.dart';
 
 class RatingModel extends RatingEntity {

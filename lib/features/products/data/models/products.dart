@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:shopping_app/features/products/data/models/rating.dart';
 import 'package:shopping_app/features/products/domain/entities/products.dart';
 

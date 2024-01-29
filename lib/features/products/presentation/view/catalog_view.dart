@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_app/config/app_module.dart';
 import 'package:shopping_app/features/products/presentation/bloc/products_bloc.dart';
-import 'package:shopping_app/features/products/presentation/bloc/products_event.dart';
 import 'package:shopping_app/features/products/presentation/bloc/products_state.dart';
 import 'package:shopping_app/features/products/presentation/widgets/catalog_gridview.dart';
 import 'package:shopping_app/features/products/presentation/widgets/catalog_loading.dart';
@@ -17,13 +13,6 @@ class CatalogView extends StatefulWidget {
 }
 
 class _CatalogViewState extends State<CatalogView> {
-
-  @override
-  void initState() {
-    serviceLocator<ProductsBloc>().add(ProductsGetEvent());
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,40 +23,24 @@ class _CatalogViewState extends State<CatalogView> {
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(8),
                 hintText: 'Search product',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(18))
-            ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18))),
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // actions: [
-        //   BadgeButton(
-        //     icon: Icons.shopping_cart,
-        //     iconColor: Colors.black,
-        //     countBasis: prod.cartList.length.toString(),
-        //     visibility: prod.cartList.isEmpty ? false : true,
-        //     onPressed: () => Navigator.push(
-        //         context, MaterialPageRoute(builder: (_) => CartScreen())),
-        //   )
-        // ],
       ),
       body: BlocBuilder<ProductsBloc, ProductsState>(
         builder: (context, state) {
           if (state is ProductsGetLoading) {
             return CatalogLoading();
-          }
-
-          if (state is ProductsGetSuccess) {
-            log("in success: ${state.productsList.length}");
+          } else if (state is ProductsGetSuccess) {
             return CatalogGridView(productList: state.productsList);
+          } else if (state is ProductsGetFailed) {
+            return Center(child: Text(state.message!));
+          } else {
+            return Container();
           }
-
-          if (state is ProductsGetFailed) {
-            return Center(
-              child: Text(state.message!),
-            );
-          }
-          return Center();
         },
       ),
     );

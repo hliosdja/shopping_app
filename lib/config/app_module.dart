@@ -7,13 +7,13 @@ import 'package:shopping_app/features/products/domain/repository/product_reposit
 import 'package:shopping_app/features/products/domain/usecases/get_products_usecase.dart';
 import 'package:shopping_app/features/products/presentation/bloc/products_bloc.dart';
 
-final serviceLocator = GetIt.instance;
+final sl = GetIt.instance;
 
 void initializeModule() {
-  serviceLocator.registerSingleton(Dio());
-  serviceLocator.registerSingleton(ApiService(serviceLocator()));
-  serviceLocator.registerSingleton(ProductsApiService(serviceLocator()));
-  serviceLocator.registerSingleton<ProductsRepository>(ProductsRepositoryImpl(serviceLocator()));
-  serviceLocator.registerSingleton(GetProductsUsecase(serviceLocator()));
-  serviceLocator.registerSingleton(ProductsBloc(serviceLocator()));
+  sl.registerSingleton(Dio());
+  sl.registerSingleton(ApiService(sl()));
+  sl.registerSingleton(ProductsApiService(sl()));
+  sl.registerSingleton<ProductsRepository>(ProductsRepositoryImpl(sl()));
+  sl.registerSingleton(GetProductsUsecase(sl()));
+  sl.registerSingleton(ProductsBloc(sl()));
 }
